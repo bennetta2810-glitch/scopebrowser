@@ -1,0 +1,42 @@
+{
+  "name": "scope-browser",
+  "productName": "Scope Browser",
+  "version": "1.0.0",
+  "description": "Scope Browser with Scope Lens built in",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --mac dmg --universal"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "dev.oneapp.scopeai.browser",
+    "productName": "Scope Browser",
+    "directories": {
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "styles.css",
+      "renderer.js",
+      "webview-preload.js",
+      "logo.png"
+    ],
+    "extraResources": [
+      {
+        "from": "ScopeLens",
+        "to": "ScopeLens"
+      }
+    ],
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.productivity",
+      "target": "dmg"
+    }
+  }
+}

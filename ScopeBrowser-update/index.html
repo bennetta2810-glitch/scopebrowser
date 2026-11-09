@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scope Browser</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="hotzone" id="hotzone"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="nav">
+        <button id="back" class="icon-btn" title="Back (⌘[)" aria-label="Back">
+          <svg viewBox="0 0 16 16"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg>
+        </button>
+        <button id="forward" class="icon-btn" title="Forward (⌘])" aria-label="Forward">
+          <svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg>
+        </button>
+        <button id="reload" class="icon-btn" title="Reload (⌘R)" aria-label="Reload">
+          <svg viewBox="0 0 16 16"><path d="M12.8 8.2A4.8 4.8 0 1 1 11.4 4.6M12.6 2.6v2.8H9.8"/></svg>
+        </button>
+        <button id="compact" class="icon-btn" title="Hide sidebar (⌘⇧S)" aria-label="Hide sidebar">
+          <svg viewBox="0 0 16 16"><rect x="2.25" y="3" width="11.5" height="10" rx="2.2"/><path d="M6.25 3v10"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <label class="address-wrap">
+      <svg class="address-icon" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.25"/><path d="m10.2 10.2 3.3 3.3"/></svg>
+      <input id="address" class="address" type="text" spellcheck="false" placeholder="Search or enter address">
+    </label>
+
+    <div class="space-header">
+      <span id="space-dot" class="space-dot"></span>
+      <span id="workspace-name" class="space-name" contenteditable="true" spellcheck="false" title="Click to rename this space"></span>
+    </div>
+
+    <div class="tabs-scroll">
+      <ul id="tab-list" class="tab-list"></ul>
+      <button id="new-tab" class="new-tab" title="New tab (⌘T)">
+        <svg viewBox="0 0 16 16"><path d="M8 3.5v9M3.5 8h9"/></svg>
+        <span>New tab</span>
+      </button>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div id="workspaces" class="workspaces" aria-label="Spaces"></div>
+      <div class="bottom-right">
+        <div class="ext-wrap">
+          <button id="ext-btn" class="icon-btn" title="Extensions" aria-label="Extensions">
+            <svg viewBox="0 0 16 16"><path d="M3 4.5h3a1.5 1.5 0 0 1 3 0h3v3a1.5 1.5 0 0 1 0 3v3H9a1.5 1.5 0 0 0-3 0H3v-3a1.5 1.5 0 0 0 0-3z"/></svg>
+          </button>
+          <div id="ext-menu" class="ext-menu" hidden></div>
+        </div>
+        <button id="lens" class="lens" title="Scope Lens: select an area (⌥⇧S)" aria-label="Start Scope Lens" disabled>
+          <img src="logo.png" alt="">
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="card">
+      <div id="load-bar" class="load-bar"></div>
+      <div id="pages" class="pages"></div>
+    </div>
+  </main>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

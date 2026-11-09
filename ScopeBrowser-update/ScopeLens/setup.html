@@ -1,0 +1,83 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Scope AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:14px 16px;font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#202124;background:#fff}
+h2{margin:0 0 2px;font-size:16px}p{margin:0 0 6px;color:#5f6368;font-size:13px}
+label{display:block;margin:10px 0 4px;font-weight:600;font-size:13px}
+label span{font-weight:400;color:#5f6368}
+input{width:100%;padding:8px 10px;border:1px solid #dadce0;border-radius:10px;font:inherit;outline:none;background:#fff;color:inherit}
+input:focus{border-color:#4285f4}
+button.go{margin-top:14px;width:100%;padding:9px;border:0;border-radius:10px;background:#1a73e8;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+button.go:disabled{opacity:.6;cursor:wait}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px}
+.link{background:none;border:0;padding:0;color:#1a73e8;font:inherit;cursor:pointer;text-decoration:underline}
+a{color:#1a73e8}
+small{display:block;color:#5f6368;font-size:12px;margin-top:3px}
+.who{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border:1px solid #e8eaed;border-radius:10px;background:#f8f9fa;font-size:13px}
+.who b{word-break:break-all}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;background:#e6f4ea;color:#137333;margin-left:6px}
+.pill.gray{background:#f1f3f4;color:#5f6368}
+.lock{text-align:center;padding:14px 4px 0}
+.lockicon{font-size:30px;margin-bottom:4px}
+.lock h2{margin-bottom:6px}
+.maxcard{text-align:left;margin:12px 0 4px;padding:10px 12px;border:2px solid #873ec5;border-radius:12px}
+.maxcard b{color:#873ec5}.maxcard span{color:#5f6368;font-size:13px}
+.maxcard ul{margin:6px 0 0;padding-left:18px;font-size:13px}
+a.golink{display:block;text-align:center;text-decoration:none;box-sizing:border-box;background:linear-gradient(135deg,#58218a,#a76ae0)}
+.center{display:block;margin:10px auto 0}
+.hint2{font-size:12px;margin:10px 0 0}
+.msg{min-height:18px;margin-top:8px;font-size:13px}.err{color:#a50e0e}.ok{color:#188038}
+[hidden]{display:none!important}
+@media (prefers-color-scheme:dark){body{background:#202124;color:#e8eaed}p,small,label span{color:#9aa0a6}input{background:#292a2d;border-color:#3c4043}.link,a{color:#8ab4f8}.err{color:#f6aea9}.ok{color:#81c995}.who{background:#292a2d;border-color:#3c4043}.pill{background:#1e3a29;color:#81c995}.pill.gray{background:#3c4043;color:#bdc1c6}.maxcard{border-color:#a76ae0}.maxcard b{color:#c99bf0}.maxcard span{color:#9aa0a6}}
+</style></head><body>
+
+<p id="loading">Loading…</p>
+
+<!-- Step 1: sign in -->
+<section id="login" hidden>
+  <h2>Sign in to use Scope AI</h2>
+  <p>Use your Scope AI website account.</p>
+  <form id="lf" novalidate>
+    <label for="em">Email</label><input id="em" type="email" autocomplete="email">
+    <label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password">
+    <button class="go" id="go" type="submit">Sign in</button>
+  </form>
+  <div class="row"><button class="link" id="forgot" type="button">Forgot password?</button><a id="signup" href="#" target="_blank" rel="noopener">Create an account</a></div>
+</section>
+
+<!-- Signed in, but the account's plan doesn't include Scope Lens -->
+<section id="locked" hidden>
+  <div class="who"><div>Signed in as <b id="lwho"></b><span id="ltier" class="pill gray"></span></div><button class="link" id="lout" type="button">Sign out</button></div>
+  <div class="lock">
+    <div class="lockicon" aria-hidden="true">&#128274;</div>
+    <h2 id="ltitle">You don't have access to Scope Lens</h2>
+    <p id="ltext"></p>
+    <div class="maxcard">
+      <b>Scope Max</b> <span>$9.99 / month</span>
+      <ul><li>Scope Lens browser extension</li><li>Live lecture transcription and AI summaries</li><li>Everything in Scope Pro</li></ul>
+    </div>
+    <a class="go golink" id="upgrade" href="#" target="_blank" rel="noopener">Upgrade to Scope Max</a>
+    <p class="hint2">Already on Scope Max? Open <a href="https://scopeai.oneapp.dev/#/dashboard/settings" target="_blank" rel="noopener">scopeai.oneapp.dev</a> while signed in with this same account, then tap “Check again”.</p>
+    <button class="link center" id="recheck" type="button">I've upgraded, check again</button>
+  </div>
+</section>
+
+<!-- Step 2: key, model, language -->
+<section id="settings" hidden>
+  <div class="who"><div>Signed in as <b id="who"></b><span id="plan" class="pill" hidden>Member</span></div><button class="link" id="out" type="button">Sign out</button></div>
+  <label for="k">Key <span id="kopt"></span></label>
+  <input id="k" type="password" placeholder="Paste your key" autocomplete="off">
+  <small>Stored only in this browser.</small>
+  <label for="m">Model</label>
+  <input id="m" list="models" placeholder="gemini-3.5-flash">
+  <datalist id="models"><option value="gemini-3.5-flash"><option value="gemini-3.5-flash-lite"><option value="gemini-3.6-flash"><option value="gemini-2.5-pro"></datalist>
+  <small>Hit a rate limit? Use gemini-3.5-flash-lite.</small>
+  <label for="l">Answer language <span>(optional)</span></label>
+  <input id="l" placeholder="e.g. Spanish">
+  <button class="go" id="save" type="button">Save &amp; start</button>
+</section>
+
+<div id="msg" class="msg" role="status" aria-live="polite"></div>
+<script src="setup.js"></script>
+</body></html>

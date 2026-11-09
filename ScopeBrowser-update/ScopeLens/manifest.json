@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "Scope AI (Firefox)",
+  "version": "1.7.1",
+  "description": "Scope AI Lens for Firefox. Select a page area, ask Gemini, and type answers into editable fields. Requires a Scope Max account.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*",
+    "https://identitytoolkit.googleapis.com/*",
+    "https://securetoken.googleapis.com/*",
+    "https://firestore.googleapis.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "action": {
+    "default_title": "Scope AI: select an area (Alt+Shift+S)"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Start selecting an area"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "scope-ai-lens@scopeai.oneapp.dev",
+      "strict_min_version": "128.0"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/icon128.png",
+        "setup.html",
+        "setup.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://scopeai.oneapp.dev/*"
+      ],
+      "js": [
+        "sitesync.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
